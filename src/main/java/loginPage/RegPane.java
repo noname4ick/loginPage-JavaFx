@@ -50,7 +50,12 @@ public class RegPane extends GridPane {
                         "Registration Failed",
                         "Username is already taken.",
                         Alert.AlertType.ERROR);
-            }else{
+            }else if(result == 2) {
+                showMessage("Information",
+                        "Registration Failed",
+                        "You can't use whitespaces",
+                        Alert.AlertType.INFORMATION);
+            } else{
                 System.out.println("File doesn't exists");
                 showMessage("Error",
                         "Can't find file",
@@ -83,7 +88,9 @@ public class RegPane extends GridPane {
         }
         try (FileWriter fw = new FileWriter(file, true)) {
             String entry = username + "|" + password + System.lineSeparator();
-
+            if(entry.contains(" ")){
+                return 2;
+            }
             fw.write(entry);
             return 1;
         } catch (IOException e) {
